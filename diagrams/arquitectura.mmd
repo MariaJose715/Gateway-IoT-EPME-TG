@@ -1,0 +1,27 @@
+flowchart LR
+    subgraph Campo["Capa de campo"]
+        M["Eastron SDM630MCT-RC"]
+        R["Bobinas Rogowski<br/>L1 · L2 · L3"]
+        R -->|"85 mV/kA"| M
+    end
+
+    subgraph Gateway["Capa de gateway"]
+        G["Gateway SerIoT<br/>Maestro Modbus RTU<br/>Módem 4G/LTE<br/>Cliente MQTT"]
+    end
+
+    subgraph Transporte["Capa de transporte"]
+        T["Internet<br/>Túnel TCP o VPS + FRP"]
+    end
+
+    subgraph Servidor["Capa de servidor"]
+        B["Mosquitto<br/>:1883"]
+        N["Node-RED<br/>:1880"]
+        I["InfluxDB 2.7<br/>:8086"]
+        F["Grafana<br/>:3000"]
+        B --> N --> I --> F
+    end
+
+    M -->|"RS485 · Modbus RTU · FC04"| G
+    G -->|"MQTT · topic datos · QoS 1"| T
+    T -->|"TCP 1883"| B
+    F --> U["Usuario<br/>navegador"]

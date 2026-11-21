@@ -1,0 +1,5 @@
+NAME               IMAGE                       COMMAND                  SERVICE     CREATED        STATUS                  PORTS
+seriot-grafana     grafana/grafana:11.2.0      "/run.sh"                grafana     2 hours ago    Up 2 hours (healthy)    0.0.0.0:3000->3000/tcp
+seriot-influxdb    influxdb:2.7                "/entrypoint.sh influx"  influxdb    2 hours ago    Up 2 hours (healthy)    0.0.0.0:8086->8086/tcp
+seriot-mosquitto   eclipse-mosquitto:2.0       "/docker-entrypoint.sh"  mosquitto   2 hours ago    Up 2 hours (healthy)    0.0.0.0:1883->1883/tcp, 0.0.0.0:9001->9001/tcp
+seriot-nodered     nodered/node-red:4.0        "./entrypoint.sh"        nodered     2 hours ago    Up 2 hours              0.0.0.0:1880->1880/tcp

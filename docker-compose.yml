@@ -1,0 +1,83 @@
+name: seriot
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: seriot-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./config/mosquitto:/mosquitto/config:ro
+      - ./data/mosquitto:/mosquitto/data
+      - ./data/mosquitto/log:/mosquitto/log
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -h localhost -t '$$SYS/broker/version' -C 1 -W 3 >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  nodered:
+    image: nodered/node-red:4.0
+    container_name: seriot-nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    environment:
+      - TZ=${TZ:-America/Bogota}
+    volumes:
+      - ./config/nodered:/data
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+      influxdb:
+        condition: service_started
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: seriot-influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_ADMIN_USER:-admin}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD:?Defina INFLUXDB_ADMIN_PASSWORD en .env}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG:-seriot}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET:-datos}
+      - DOCKER_INFLUXDB_INIT_RETENTION=${INFLUXDB_RETENTION:-30d}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_TOKEN:?Defina INFLUXDB_TOKEN en .env}
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: seriot-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=${TZ:-America/Bogota}
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:?Defina GRAFANA_ADMIN_PASSWORD en .env}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+      - GF_ANALYTICS_CHECK_FOR_UPDATES=false
+      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN:?Defina INFLUXDB_TOKEN en .env}
+      - INFLUXDB_ORG=${INFLUXDB_ORG:-seriot}
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET:-datos}
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      influxdb:
+        condition: service_healthy

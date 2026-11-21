@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validacion:
+    name: Pruebas y validación
+    runs-on: ubuntu-latest
+
+    env:
+      INFLUXDB_ADMIN_PASSWORD: ci-influx-password
+      INFLUXDB_TOKEN: ci-influx-token
+      GRAFANA_ADMIN_PASSWORD: ci-grafana-password
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tests/requirements.txt
+
+      - name: Instalar dependencias de prueba
+        run: python -m pip install -r tests/requirements.txt
+
+      - name: Ejecutar pruebas unitarias
+        run: python -m pytest -q tests
+
+      - name: Validar JSON del dashboard
+        run: python -m json.tool config/grafana/dashboards/seriot-main.json > /dev/null
+
+      - name: Validar flujo de Node-RED
+        run: python -m json.tool config/nodered/flows.json > /dev/null
+
+      - name: Revisar sintaxis de los scripts
+        run: |
+          for archivo in scripts/*.sh; do
+            echo "Revisando ${archivo}"
+            bash -n "${archivo}"
+          done
+
+      - name: Validar docker-compose.yml
+        run: docker compose config > /dev/null

@@ -1,0 +1,50 @@
+[
+  {
+    "_time": "2026-11-20T20:30:00.000Z",
+    "_measurement": "energia",
+    "_field": "voltaje",
+    "_value": 121.5
+  },
+  {
+    "_time": "2026-11-20T20:30:00.000Z",
+    "_measurement": "energia",
+    "_field": "corriente",
+    "_value": 5.2
+  },
+  {
+    "_time": "2026-11-20T20:30:00.000Z",
+    "_measurement": "energia",
+    "_field": "potencia",
+    "_value": 631.0
+  },
+  {
+    "_time": "2026-11-20T20:30:00.000Z",
+    "_measurement": "energia",
+    "_field": "energia",
+    "_value": 12.34
+  },
+  {
+    "_time": "2026-11-20T20:30:10.000Z",
+    "_measurement": "energia",
+    "_field": "voltaje",
+    "_value": 121.4
+  },
+  {
+    "_time": "2026-11-20T20:30:10.000Z",
+    "_measurement": "energia",
+    "_field": "corriente",
+    "_value": 5.18
+  },
+  {
+    "_time": "2026-11-20T20:30:10.000Z",
+    "_measurement": "energia",
+    "_field": "potencia",
+    "_value": 628.0
+  },
+  {
+    "_time": "2026-11-20T20:30:10.000Z",
+    "_measurement": "energia",
+    "_field": "energia",
+    "_value": 12.34
+  }
+]

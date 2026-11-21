@@ -1,0 +1,14 @@
+# Normalización de finales de línea
+* text=auto eol=lf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.docx binary
+*.zip binary
+
+# PowerShell conserva CRLF
+*.ps1 text eol=crlf

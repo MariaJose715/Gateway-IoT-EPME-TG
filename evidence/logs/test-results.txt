@@ -1,0 +1,33 @@
+===============================================================================
+ Gateway IoT EPME-TG · Resumen consolidado de la sesión de validación
+ Fecha: 2026-11-20
+ Entorno: Docker Desktop sobre Windows 11 + WSL2
+ Medidor: Eastron SDM630MCT-RC · esclavo 1 · 9600 8N1
+ Gateway: SerIoT · 4G/LTE · tópico «datos» · muestreo 10 s
+===============================================================================
+
+T01  Stack Docker ......................... OK  4/4 servicios activos
+T02  Broker MQTT .......................... OK  mensaje de prueba recibido
+T03  Conexión del gateway ................. OK  cliente MQTT conectado
+T04  Lectura de tensión ................... OK  referencia 121,5 V / dashboard 121,4 V / error 0,08 %
+T05  Lectura de corriente ................. OK  referencia 5,20 A / dashboard 5,18 A / error 0,38 %
+T06  Publicación periódica ................ OK  1 mensaje cada 10 s
+T07  Latencia extremo a extremo ........... OK  promedio 1,8 s
+T08  Consulta a InfluxDB .................. OK  último registro disponible en el bucket «datos»
+T09  Dashboard Grafana .................... OK  paneles de tensión, corriente, potencia y energía con datos
+T10  Reproducibilidad ..................... OK  despliegue completo desde docker-compose.yml
+
+-------------------------------------------------------------------------------
+ Ventana de validación
+-------------------------------------------------------------------------------
+ Muestras esperadas ....................... 720
+ Muestras válidas ......................... 718
+ Continuidad .............................. 99,7 %
+ Potencia activa de referencia ............ 631 W
+ Potencia activa en dashboard ............. 628 W
+ Energía de referencia .................... 12,34 kWh
+ Energía en dashboard ..................... 12,34 kWh
+ Frecuencia ............................... 60,0 Hz
+-------------------------------------------------------------------------------
+ Resultado global: CONFORME
+===============================================================================

@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "Si utiliza este trabajo en un proyecto académico o técnico, cite:"
+type: software
+title: "Gateway IoT EPME-TG: plataforma de telemetría eléctrica industrial"
+abstract: >-
+  Caso de uso de telemetría IoT para la medición eléctrica industrial con el
+  medidor Eastron SDM630MCT-RC, el Gateway SerIoT y un stack autoalojado de
+  Mosquitto, Node-RED, InfluxDB y Grafana sobre Docker Compose.
+authors:
+  - family-names: Cuadros Ortega
+    given-names: Nayely María José
+    affiliation: "Universidad Nacional de Colombia, Sede Manizales"
+repository-code: "https://github.com/MariaJose715/Gateway-IoT-EPME-TG"
+url: "https://github.com/MariaJose715/Gateway-IoT-EPME-TG"
+license: MIT
+license-url: "https://opensource.org/licenses/MIT"
+keywords:
+  - IoT
+  - Modbus RTU
+  - MQTT
+  - InfluxDB
+  - Grafana
+  - Docker
+  - telemetría
+  - medición eléctrica
+  - Eastron SDM630MCT-RC
+  - Gateway SerIoT
+date-released: "2026-11-20"
+version: "1.0.0"

@@ -1,0 +1,10 @@
+# Lista de control de acceso por tópico (ejemplo)
+# El gateway solo publica telemetría; Node-RED solo lee.
+
+user seriot-gateway
+topic write datos
+topic read $SYS/broker/version
+
+user seriot-nodered
+topic read datos
+topic read $SYS/broker/version

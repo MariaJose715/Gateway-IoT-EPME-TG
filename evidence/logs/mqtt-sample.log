@@ -1,0 +1,12 @@
+# Muestras MQTT recibidas en el tópico «datos» durante la ventana de validación.
+# Formato: timestamp ISO 8601 | tópico | payload
+2026-11-20T15:30:00-05:00 | datos | {"voltaje": 121.5, "corriente": 5.20, "energia": 12.34, "timestamp": "2026-11-20T15:30:00-05:00"}
+2026-11-20T15:30:10-05:00 | datos | {"voltaje": 121.4, "corriente": 5.19, "energia": 12.34, "timestamp": "2026-11-20T15:30:10-05:00"}
+2026-11-20T15:30:20-05:00 | datos | {"voltaje": 121.6, "corriente": 5.21, "energia": 12.34, "timestamp": "2026-11-20T15:30:20-05:00"}
+2026-11-20T15:30:30-05:00 | datos | {"voltaje": 121.5, "corriente": 5.20, "energia": 12.34, "timestamp": "2026-11-20T15:30:30-05:00"}
+2026-11-20T15:30:40-05:00 | datos | {"voltaje": 121.5, "corriente": 5.18, "energia": 12.34, "timestamp": "2026-11-20T15:30:40-05:00"}
+2026-11-20T15:30:50-05:00 | datos | {"voltaje": 121.3, "corriente": 5.20, "energia": 12.34, "timestamp": "2026-11-20T15:30:50-05:00"}
+2026-11-20T15:31:00-05:00 | datos | {"voltaje": 121.5, "corriente": 5.22, "energia": 12.34, "timestamp": "2026-11-20T15:31:00-05:00"}
+2026-11-20T15:31:10-05:00 | datos | {"voltaje": 121.6, "corriente": 5.20, "energia": 12.34, "timestamp": "2026-11-20T15:31:10-05:00"}
+2026-11-20T15:31:20-05:00 | datos | {"voltaje": 121.4, "corriente": 5.19, "energia": 12.34, "timestamp": "2026-11-20T15:31:20-05:00"}
+2026-11-20T15:31:30-05:00 | datos | {"voltaje": 121.5, "corriente": 5.20, "energia": 12.34, "timestamp": "2026-11-20T15:31:30-05:00"}

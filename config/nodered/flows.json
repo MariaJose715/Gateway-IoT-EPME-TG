@@ -1,0 +1,133 @@
+[
+    {
+        "id": "b5632d26589e0990",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a5c4a1e7406393dc",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Local",
+        "broker": "mosquitto",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e9687a4fa39e3eee",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": 8086,
+        "protocol": "http",
+        "database": "datos",
+        "name": "seriot_datos",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "6c792eaff4d3153f",
+        "type": "mqtt in",
+        "z": "b5632d26589e0990",
+        "name": "MQTT # (descubrimiento)",
+        "topic": "#",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "a5c4a1e7406393dc",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "f100000000000001"
+            ]
+        ]
+    },
+    {
+        "id": "f100000000000001",
+        "type": "function",
+        "z": "b5632d26589e0990",
+        "name": "Normalizar payload SerIoT",
+        "func": "let p = msg.payload;\nif (Buffer.isBuffer(p)) { p = p.toString('utf8'); }\nif (typeof p === 'string') {\n    try { p = JSON.parse(p); } catch (e) { /* mantener string */ }\n}\nif (p === null || p === undefined) { p = {}; }\nif (typeof p !== 'object' || Array.isArray(p)) {\n    p = { value: p };\n}\nmsg.payload = p;\nmsg.measurement = 'energia';\nmsg.topic = msg.topic || 'seriot';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "06d5c443ff32ed62",
+                "671b8e76d72281f9"
+            ]
+        ]
+    },
+    {
+        "id": "06d5c443ff32ed62",
+        "type": "influxdb out",
+        "z": "b5632d26589e0990",
+        "influxdb": "e9687a4fa39e3eee",
+        "name": "Escribir InfluxDB",
+        "measurement": "energia",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "database": "datos",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "seriot",
+        "bucket": "datos",
+        "x": 700,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "671b8e76d72281f9",
+        "type": "debug",
+        "z": "b5632d26589e0990",
+        "name": "debug payload",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 280,
+        "wires": []
+    }
+]

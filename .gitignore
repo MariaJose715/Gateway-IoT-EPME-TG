@@ -1,0 +1,52 @@
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# Datos persistidos por los contenedores
+data/
+backups/
+
+# Mosquitto: credenciales y certificados generados
+config/mosquitto/passwd
+config/mosquitto/aclfile
+config/mosquitto/certs/
+
+# Node-RED: archivos de ejecución y credenciales
+config/nodered/.config.*
+config/nodered/.flows.json.backup
+config/nodered/.flows_cred.json.backup
+config/nodered/flows_cred.json
+config/nodered/node_modules/
+config/nodered/package.json
+config/nodered/package-lock.json
+config/nodered/.npm/
+config/nodered/lib/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.coverage
+htmlcov/
+
+# Editores y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Word / Office
+~$*
+*.tmp
+
+# Registros locales (se conservan las evidencias del repositorio)
+*.log
+!evidence/logs/*.log
